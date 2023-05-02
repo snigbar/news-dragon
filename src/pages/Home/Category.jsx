@@ -1,11 +1,14 @@
 import React from 'react'
 import { useLoaderData, useParams } from 'react-router-dom'
+import NewsCard from './NewsCard';
+import { Stack } from 'react-bootstrap';
 
 const Category = () => {
-    const {id} = useParams();
     const categoryNews = useLoaderData();
   return (
-    <div>Category: {categoryNews.length}</div>
+    <Stack direction='column' gap={4}>
+        {categoryNews.map(news => <NewsCard key={news._id} data={news}></NewsCard>)}
+    </Stack>
   )
 }
 
