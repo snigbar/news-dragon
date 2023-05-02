@@ -4,13 +4,17 @@ import Footer from '../pages/shared/Footer/Footer'
 import RightNav from '../pages/shared/RightNav/RightNav'
 import LeftNav from '../pages/shared/LeftNav/LeftNav'
 import { Col, Container, Row } from 'react-bootstrap'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLoaderData } from 'react-router-dom'
+import NavigationBar from '../pages/shared/NavigationBar/NavigationBar'
 
 const Main = () => {
 
+  const allNews = useLoaderData();
+
   return (
     <div>
-     <Header></Header>
+     <Header data={allNews} from={"main"}></Header>
+     <NavigationBar></NavigationBar>
      <Container>
 
       <Row>
