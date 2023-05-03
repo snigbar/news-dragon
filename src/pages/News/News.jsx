@@ -15,7 +15,7 @@ const News = () => {
         <Card.Text className='fs-6 mt-4'>
           {details}
         </Card.Text>
-        <Link to={`/categories/${category_id}`}><Button variant='danger px-4'><FaArrowLeft className='me-2'/> All news in this categories</Button></Link>
+        <Link to={`/home/categories/${category_id}`}><Button variant='danger px-4'><FaArrowLeft className='me-2'/> All news in this categories</Button></Link>
       </Card.Body>
 
       
