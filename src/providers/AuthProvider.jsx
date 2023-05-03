@@ -1,5 +1,5 @@
-import React, { createContext } from 'react'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import React, { createContext, useEffect, useState } from 'react'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "firebase/auth";
 import app from '../firebase/firebase-config';
 
 
@@ -10,8 +10,59 @@ const auth = getAuth(app);
 
 const AuthProvider = ({children}) => {
 
-    const user = {name:"okla"};
-    const authInfo = {user};
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const createUser = (email,password) =>{
+        setLoading(true)
+        return createUserWithEmailAndPassword(auth,email,password);
+    }
+
+    const logIn = (email,password) =>{
+        setLoading(true)
+        return signInWithEmailAndPassword(auth,email,password);
+    }
+
+    const updateUser = (name,photoUrl) =>{
+
+            updateProfile(auth.currentUser, {
+            displayName: name, photoURL: photoUrl
+            }).then(() => {
+            // Profile updated!
+              
+            // ...
+            }).catch((error) => {
+            // An error occurred
+            // ...
+            console.log(error)
+            });
+    }
+
+
+
+    useEffect(()=>{
+        const unsubscribe = onAuthStateChanged(auth, loggedUser => {
+            setUser(loggedUser);
+            setLoading(false)
+        })
+
+        return () => {
+            unsubscribe();
+        }
+    }, [])
+  
+    const logOut =() =>{
+        return signOut(auth);
+    }
+
+    const authInfo = {
+        user,
+        createUser,
+        logIn,
+        updateUser,
+        logOut,
+        loading
+    };
 
   return (
     <AuthContext.Provider value={authInfo}>  

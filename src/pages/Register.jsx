@@ -1,12 +1,44 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../providers/AuthProvider';
 
 const Register = () => {
+
+    const {user,createUser,updateUser} = useContext(AuthContext);
+    const [accepted, setAccepted] = useState(false);
+
+    const handleRegister = event => {
+        event.preventDefault();
+        const form = event.target;
+        const name = form.name.value;
+        const photo = form.photo.value;
+        const email = form.email.value;
+        const password = form.password.value;
+
+
+
+        createUser(email,password)
+        .then(res =>{
+            const createdUser = res.user;
+            form.reset();
+        }).catch(err => console.log(err));
+
+        updateUser(name,photo);
+    
+
+    }
+
+
+    const handlTerms = (e) =>{
+        setAccepted(e.target.checked);
+    }
+   
+
   return (
     <Container className='w-50 bg-light mx-auto px-3 py-2 text-secondary'>
         <h4 className='fw-bold fs-4 mb-4'>Please Register</h4>
-    <Form>
+    <Form onSubmit={handleRegister}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Name</Form.Label>
             <Form.Control type="text" name='name' placeholder="Your Name" required />
@@ -29,9 +61,12 @@ const Register = () => {
             <Form.Check
                 type="checkbox"
                 name="accept"
-                label={<>Accept <Link to="/terms">Terms and Conditions</Link> </>} />
+                label={<>Accept <Link to="/terms">Terms and Conditions</Link> </>} 
+                onClick={handlTerms}
+                />
+                
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" disabled={!accepted}>
             Register
         </Button>
         <br />
