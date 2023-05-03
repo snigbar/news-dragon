@@ -30,7 +30,17 @@ const NavigationBar = () => {
         <Nav>
           <Stack direction='horizontal' gap={2}>
           {
-                                user && <FaUserCircle style={{ fontSize: '2rem' }}></FaUserCircle>
+
+                                user && <img 
+                                style={{
+                                  height:"40px",
+                                  width: "40px", 
+                                  padding:"1px", 
+                                  backgroundColor:"#f1f2f6",
+                                  border:"1px solid #3742fa",
+                                  borderRadius:"50%"
+                                }}
+                                 src={user.photoURL} />
                             }
 
                             {user ?

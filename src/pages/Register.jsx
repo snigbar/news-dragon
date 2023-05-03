@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 
 const Register = () => {
 
     const {user,createUser,updateUser} = useContext(AuthContext);
     const [accepted, setAccepted] = useState(false);
+    const navigate = useNavigate();
 
     const handleRegister = event => {
         event.preventDefault();
@@ -19,16 +20,20 @@ const Register = () => {
 
 
         createUser(email,password)
-        .then(res =>{
-            const createdUser = res.user;
+        .then(() =>{
+            updateUser(name,photo);
             form.reset();
+            navigate('/home')
+
+
         }).catch(err => console.log(err));
 
-        updateUser(name,photo);
+        
     
 
     }
 
+    console.log(user)
 
     const handlTerms = (e) =>{
         setAccepted(e.target.checked);
