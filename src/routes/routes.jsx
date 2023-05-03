@@ -38,7 +38,7 @@ const router = createBrowserRouter([
     {
       path: "/home",
       element: <Main></Main>,
-      loader:() => fetch("http://localhost:5000/categories/0"),
+      loader:() => fetch("https://news-dragon-server-snigbar.vercel.app/categories/0"),
       children:[
         {
             path:"/home",
@@ -48,19 +48,19 @@ const router = createBrowserRouter([
         {
             path:"/home/categories/:id",
             element:<Category></Category>,
-            loader: ({params}) => fetch(`http://localhost:5000/categories/${params.id}`)
+            loader: ({params}) => fetch(`https://news-dragon-server-snigbar.vercel.app/categories/${params.id}`)
         }
       ]
     },
     {
       path:'/news',
       element:<NewsLayout></NewsLayout>,
-      loader:() => fetch("http://localhost:5000/categories/0"),
+      loader:() => fetch("https://news-dragon-server-snigbar.vercel.app/categories/0"),
       children: [
         {
           path: ':id',
           element:<PrivateRoute><News></News></PrivateRoute>,
-          loader: ({params}) => fetch(`http://localhost:5000/news/${params.id}`)
+          loader: ({params}) => fetch(`https://news-dragon-server-snigbar.vercel.app/news/${params.id}`)
         }
       ]
     }

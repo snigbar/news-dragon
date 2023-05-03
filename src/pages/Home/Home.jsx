@@ -6,7 +6,7 @@ const Home = () => {
   const [allNews, setAllNews] = useState([]);
 
   useEffect(()=>{
-      fetch('http://localhost:5000/categories/0')
+      fetch('https://news-dragon-server-snigbar.vercel.app/categories/0')
       .then(res => res.json())
       .then(data => setAllNews(data))
       .catch(err => console.log(err))
